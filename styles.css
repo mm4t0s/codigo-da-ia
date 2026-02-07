@@ -319,6 +319,56 @@ a {
     animation: glow-pulse 4s infinite alternate;
 }
 
+.vsl-video-frame {
+    aspect-ratio: 9 / 16;
+    width: min(92vw, 560px);
+    margin: 0 auto;
+    border-radius: 18px;
+    border-color: rgba(255, 107, 0, 0.25);
+    box-shadow: 0 0 35px rgba(255, 107, 0, 0.18);
+}
+
+@media (max-width: 640px) {
+    .vsl-video-frame {
+        width: 92vw;
+        max-width: 92vw;
+    }
+}
+
+.vsl-video-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.vsl-sound-toggle {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    background: rgba(14, 14, 14, 0.85);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.vsl-sound-toggle:hover {
+    transform: translateY(-1px);
+    background: rgba(20, 20, 20, 0.92);
+}
+
+.vsl-sound-toggle.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+}
+
 @keyframes glow-pulse {
     0% {
         opacity: 0.6;
@@ -348,12 +398,13 @@ a {
 }
 
 .play-button {
-    width: 70px;
-    height: 70px;
-    background: var(--accent-orange);
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 107, 0, 0.5);
     border-radius: 50%;
     position: relative;
     margin-bottom: 15px;
+    opacity: 0.4;
 }
 
 .play-button::after {
@@ -362,9 +413,9 @@ a {
     top: 50%;
     left: 55%;
     transform: translate(-50%, -50%);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 18px solid white;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 9px solid white;
 }
 
 .vsl-benefits {
@@ -723,6 +774,7 @@ footer {
     border-radius: 20px;
     padding: 1px;
     background: linear-gradient(45deg, transparent, var(--accent-orange), transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -2349,6 +2401,7 @@ footer {
     background: var(--accent-orange);
     transform: scale(1.3);
 }
+
 
 /* Subtle Video Card CTA */
 .cta-link-video {

@@ -268,6 +268,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initStickyCTA();
 
+    // --- VSL VIDEO SOUND TOGGLE ---
+    function initVslSoundToggle() {
+        const vslPlayer = document.getElementById('vsl-player');
+        const soundToggle = document.querySelector('.vsl-sound-toggle');
+        if (!vslPlayer || !soundToggle) return;
+
+        const enableSound = () => {
+            try {
+                const url = new URL(vslPlayer.src);
+                url.searchParams.set('mute', '0');
+                url.searchParams.set('autoplay', '1');
+                url.searchParams.set('playsinline', '1');
+                url.searchParams.set('enablejsapi', '1');
+                url.searchParams.set('origin', window.location.origin);
+                vslPlayer.src = url.toString();
+            } catch (err) {}
+            vslPlayer.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            vslPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            soundToggle.classList.add('is-hidden');
+        };
+
+        soundToggle.addEventListener('click', enableSound);
+        document.addEventListener('click', enableSound, { once: true });
+        document.addEventListener('keydown', enableSound, { once: true });
+    }
+
+    initVslSoundToggle();
+
     // --- VIDEO CAROUSEL LOGIC ---
     function initVideoCarousel() {
         const carousel = document.querySelector('.video-carousel');
