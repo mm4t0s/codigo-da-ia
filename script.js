@@ -189,6 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateCarousel(index);
                 });
             });
+
+            // Initialize explicitly
+            updateCarousel(0);
         });
     }
 
