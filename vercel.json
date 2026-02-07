@@ -1,6 +1,5 @@
 {
   "buildCommand": "",
   "devCommand": "",
-  "outputDirectory": ".",
-  "framework": "vanilla"
+  "outputDirectory": "."
 }
