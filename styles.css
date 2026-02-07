@@ -275,21 +275,65 @@ a {
     color: var(--text-main);
 }
 
-.video-wrapper {
-    max-width: 900px;
+/* Simple Orange Video Frame */
+.video-frame-orange {
+    width: 100%;
+    max-width: 420px;
     margin: 0 auto 40px;
+    aspect-ratio: 9 / 16;
+    border: 4px solid var(--accent-orange);
+    border-radius: 20px;
+    overflow: hidden;
     position: relative;
+    box-shadow: 0 0 40px rgba(255, 107, 0, 0.2);
+    /* Soft branded glow */
+    background: #000;
 }
 
-.video-frame {
-    aspect-ratio: 16 / 9;
-    background: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    position: relative;
-    box-shadow: 0 0 50px rgba(255, 107, 0, 0.1);
+.video-frame-orange iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
+
+.video-wrapper {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Background Glow Effect - Intensified */
+.video-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.4) 0%, rgba(100, 50, 0, 0.1) 50%, rgba(0, 0, 0, 0) 80%);
+    filter: blur(50px);
+    z-index: -1;
+    animation: glow-pulse 4s infinite alternate;
+}
+
+@keyframes glow-pulse {
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+
+
+
 
 .video-placeholder {
     width: 100%;
@@ -2304,4 +2348,235 @@ footer {
 .indicator.active {
     background: var(--accent-orange);
     transform: scale(1.3);
+}
+
+/* Subtle Video Card CTA */
+.cta-link-video {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--accent-orange);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.cta-link-video:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Video Placeholder Styles */
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    cursor: default;
+}
+
+.video-placeholder .play-button.small {
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Muted button */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.video-placeholder .play-button.small::after {
+    border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- MASTER MOBILE OPTIMIZATION & REVIEWS --- */
+@media (max-width: 768px) {
+
+    /* 1. Global Spacing & Typography Compactness */
+    .hero {
+        min-height: auto;
+        padding: 50px 20px 40px;
+        /* Reduced top/bottom padding */
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.1;
+        margin-bottom: 15px;
+    }
+
+    .subheadline {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        line-height: 1.4;
+    }
+
+    /* Compact Section Padding */
+    .vsl-container,
+    .market-status,
+    .why-it-works,
+    .learning-path,
+    .authority,
+    .target-audience,
+    .guarantee,
+    .final-cta,
+    .visual-proof,
+    .market-proof,
+    .deliverables,
+    .faq,
+    .final-transition,
+    .special-offer {
+        padding: 40px 0 !important;
+        /* Force tight spacing */
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+        line-height: 1.2;
+        padding: 0 10px;
+    }
+
+    .section-subtitle {
+        margin-top: -20px;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+        padding: 0 15px;
+    }
+
+    /* 2. Centralization & Alignment */
+    .split-layout {
+        flex-direction: column;
+        text-align: center !important;
+        gap: 30px;
+    }
+
+    .audience-column,
+    .news-text,
+    .auth-text {
+        text-align: center !important;
+        padding: 0 !important;
+        /* Remove extra padding in columns */
+        align-items: center !important;
+    }
+
+    .news-list,
+    .auth-bullets {
+        display: inline-block;
+        /* Allows list to be centered as a block */
+        text-align: left;
+        /* Keep list item text readable */
+        margin: 0 auto;
+    }
+
+    p,
+    .card p,
+    .module p {
+        text-align: center;
+        /* Default text center on mobile for flow */
+    }
+
+    /* Exception: Lists should be left-aligned but centered block */
+    ul {
+        text-align: left;
+    }
+
+    /* 3. VSL & Video Frames */
+    .video-wrapper,
+    .video-frame-orange {
+        width: 100% !important;
+        max-width: 100% !important;
+        /* Full width on mobile */
+        margin-bottom: 30px;
+    }
+
+    .video-frame-orange {
+        border-width: 3px;
+        /* Slightly thinner border on small screens */
+    }
+
+    /* 4. CTA Fixes */
+    .cta-button {
+        width: 100%;
+        max-width: 100%;
+        /* Full stretch */
+        font-size: 1rem;
+        padding: 16px 10px;
+        /* Comfortable touch area */
+        white-space: normal;
+        /* Allow text wrap if needed */
+        line-height: 1.3;
+    }
+
+    .center-cta {
+        margin-top: 30px;
+        /* Reduced from 40px */
+        width: 100%;
+    }
+
+    /* 5. Specific Sections Compactness */
+    .cards-grid,
+    .modules-grid,
+    .faq-grid {
+        gap: 20px;
+        /* Tighter grid */
+        grid-template-columns: 1fr;
+        /* Force single column */
+    }
+
+    .card,
+    .learning-box,
+    .faq-item {
+        padding: 25px 20px;
+    }
+
+    .faq-item h3 {
+        text-align: left;
+        /* Keep FAQ headers readable */
+    }
+
+    .faq-item p {
+        text-align: left;
+    }
+
+    /* Authority Image */
+    .auth-image-wrapper {
+        margin: 0 auto;
+    }
+
+    /* Targets */
+    .audience-column ul li {
+        text-align: left;
+    }
+
+    /* Deliverables */
+    .deliverables-list li {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .deliverables-list .text {
+        text-align: center;
+    }
+
+    /* Sticky Bar Visibility */
+    .sticky-cta-bar {
+        display: block !important;
+        /* Ensure it appears */
+        padding-bottom: 30px;
+        /* iPhone Safe Area */
+    }
+
+    /* Ensure no horizontal overflow */
+    body,
+    html {
+        overflow-x: hidden;
+        width: 100%;
+    }
 }
