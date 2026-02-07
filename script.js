@@ -337,13 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- SMART VIDEO CONTROLS ---
     function initSmartVideo() {
-        const wrap = document.querySelector('[data-smart-video]');
-        if (!wrap) return;
-
-        const video = wrap.querySelector('video');
-        const playBtn = wrap.querySelector('.sv-play');
-        const muteBtn = wrap.querySelector('.sv-mute');
-        if (!video || !playBtn || !muteBtn) return;
+        const wraps = document.querySelectorAll('[data-smart-video]');
+        if (!wraps.length) return;
 
         const ICON_MUTE = `
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -360,60 +355,69 @@ document.addEventListener("DOMContentLoaded", () => {
             </svg>
         `;
 
-        const syncUI = () => {
-            const isPaused = video.paused;
-            const isMuted = video.muted;
-            playBtn.textContent = isPaused ? '▶' : '❚❚';
-            playBtn.setAttribute('aria-label', isPaused ? 'Reproduzir vídeo' : 'Pausar vídeo');
-            muteBtn.innerHTML = isMuted ? ICON_MUTE : ICON_UNMUTE;
-            muteBtn.setAttribute('aria-label', isMuted ? 'Ativar som' : 'Silenciar');
+        const setupSmartVideo = (wrap) => {
+            const video = wrap.querySelector('video');
+            const playBtn = wrap.querySelector('.sv-play');
+            const muteBtn = wrap.querySelector('.sv-mute');
+            if (!video || !playBtn || !muteBtn) return;
 
-            wrap.classList.toggle('is-playing', !isPaused);
-            wrap.classList.toggle('is-paused', isPaused);
+            const syncUI = () => {
+                const isPaused = video.paused;
+                const isMuted = video.muted;
+                playBtn.textContent = isPaused ? '▶' : '❚❚';
+                playBtn.setAttribute('aria-label', isPaused ? 'Reproduzir vídeo' : 'Pausar vídeo');
+                muteBtn.innerHTML = isMuted ? ICON_MUTE : ICON_UNMUTE;
+                muteBtn.setAttribute('aria-label', isMuted ? 'Ativar som' : 'Silenciar');
+
+                wrap.classList.toggle('is-playing', !isPaused);
+                wrap.classList.toggle('is-paused', isPaused);
+            };
+
+            playBtn.addEventListener('click', async () => {
+                if (video.paused) {
+                    try {
+                        await video.play();
+                    } catch (err) {}
+                } else {
+                    video.pause();
+                }
+                syncUI();
+            });
+
+            muteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                video.muted = !video.muted;
+                syncUI();
+            });
+
+            wrap.addEventListener('click', async (e) => {
+                if (e.target === playBtn || e.target === muteBtn) return;
+                if (e.target.closest && e.target.closest('.sv-mute')) return;
+                if (video.paused) {
+                    try {
+                        await video.play();
+                    } catch (err) {}
+                } else {
+                    video.pause();
+                }
+                syncUI();
+            });
+
+            video.addEventListener('play', syncUI);
+            video.addEventListener('pause', syncUI);
+            video.addEventListener('volumechange', syncUI);
+            wrap.addEventListener('mouseenter', () => wrap.classList.add('is-hover'));
+            wrap.addEventListener('mouseleave', () => wrap.classList.remove('is-hover'));
+
+            (async () => {
+                try {
+                    await video.play();
+                } catch (err) {}
+                syncUI();
+            })();
         };
 
-        playBtn.addEventListener('click', async () => {
-            if (video.paused) {
-                try {
-                    await video.play();
-                } catch (err) {}
-            } else {
-                video.pause();
-            }
-            syncUI();
-        });
-
-        muteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            video.muted = !video.muted;
-            syncUI();
-        });
-
-        wrap.addEventListener('click', async (e) => {
-            if (e.target === playBtn || e.target === muteBtn) return;
-            if (e.target.closest && e.target.closest('.sv-mute')) return;
-            if (video.paused) {
-                try {
-                    await video.play();
-                } catch (err) {}
-            } else {
-                video.pause();
-            }
-            syncUI();
-        });
-
-        video.addEventListener('play', syncUI);
-        video.addEventListener('pause', syncUI);
-        video.addEventListener('volumechange', syncUI);
-        wrap.addEventListener('mouseenter', () => wrap.classList.add('is-hover'));
-        wrap.addEventListener('mouseleave', () => wrap.classList.remove('is-hover'));
-
-        (async () => {
-            try {
-                await video.play();
-            } catch (err) {}
-            syncUI();
-        })();
+        wraps.forEach(setupSmartVideo);
     }
 
     initSmartVideo();
