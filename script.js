@@ -371,6 +371,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 wrap.classList.toggle('is-playing', !isPaused);
                 wrap.classList.toggle('is-paused', isPaused);
+                // Inline styles to avoid mobile overlay quirks
+                playBtn.style.opacity = isPaused ? '1' : '0';
+                playBtn.style.pointerEvents = isPaused ? 'auto' : 'none';
             };
 
             playBtn.addEventListener('click', async () => {
@@ -404,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             video.addEventListener('play', syncUI);
+            video.addEventListener('playing', syncUI);
             video.addEventListener('pause', syncUI);
             video.addEventListener('volumechange', syncUI);
             wrap.addEventListener('mouseenter', () => wrap.classList.add('is-hover'));
