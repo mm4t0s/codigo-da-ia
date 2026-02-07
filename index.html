@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" href="images/favicon-codigo-da-ia.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon-codigo-da-ia.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/favicon-codigo-da-ia.png">
     <link rel="stylesheet" href="styles.css">
     <!-- Placeholder for icons if needed, using generic or SVGs is better -->
 </head>
@@ -46,11 +49,33 @@
                 QUEREM QUE VOCÊ VEJA.</p>
 
             <div class="video-frame-orange">
-                <iframe
-                    src="https://player.vimeo.com/video/1162740432?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                    style="width:100%; height:100%;" title="VSL Video">
-                </iframe>
+                <div class="sv-wrap" data-smart-video>
+                    <video
+                        class="sv-video"
+                        src="https://okba5k7vri4on1qh.public.blob.vercel-storage.com/01.mp4"
+                        autoplay
+                        loop
+                        playsinline
+                        preload="metadata"
+                        controlslist="nodownload noplaybackrate noremoteplayback"
+                        disablepictureinpicture
+                        disableremoteplayback
+                        title="VSL Video">
+                    </video>
+
+                    <button
+                        type="button"
+                        class="sv-btn sv-play"
+                        aria-label="Reproduzir vídeo">
+                        ▶
+                    </button>
+
+                    <button
+                        type="button"
+                        class="sv-btn sv-mute"
+                        aria-label="Ativar som">
+                    </button>
+                </div>
             </div>
 
             <div class="vsl-benefits">

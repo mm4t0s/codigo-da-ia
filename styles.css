@@ -279,7 +279,7 @@ a {
 .video-frame-orange {
     width: 100%;
     max-width: 420px;
-    margin: 0 auto 40px;
+    margin: 0 auto 24px;
     aspect-ratio: 9 / 16;
     border: 4px solid var(--accent-orange);
     border-radius: 20px;
@@ -290,10 +290,133 @@ a {
     background: #000;
 }
 
-.video-frame-orange iframe {
+.video-frame-orange iframe,
+.video-frame-orange video {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.sv-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    cursor: pointer;
+}
+
+.sv-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.sv-btn {
+    position: absolute;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+
+    display: grid;
+    place-items: center;
+
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+
+    background: #ff7a00;
+    box-shadow: 0 10px 28px rgba(255, 122, 0, 0.35);
+    color: #0b0b0b;
+
+    font-size: 22px;
+    font-weight: 800;
+    transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.sv-btn svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sv-mute svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Play some/none depending on state */
+.sv-play {
+    opacity: 1;
+    transition: transform 0.12s ease, filter 0.12s ease, opacity 0.18s ease;
+}
+
+.sv-wrap.is-playing .sv-play {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sv-wrap.is-playing.is-hover .sv-play {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sv-btn:hover {
+    filter: brightness(1.05);
+}
+
+.sv-btn:active {
+    transform: scale(0.98);
+}
+
+.sv-play {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sv-play:hover {
+    transform: translate(-50%, -50%) scale(1.03);
+}
+
+.sv-play:active {
+    transform: translate(-50%, -50%) scale(0.98);
+}
+
+.sv-mute:hover {
+    transform: scale(1.03);
+}
+
+.sv-mute:active {
+    transform: scale(0.98);
+}
+
+.sv-mute {
+    right: 14px;
+    bottom: 14px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    opacity: 0;
+    pointer-events: auto;
+}
+
+.sv-mute:hover,
+.sv-mute:focus-visible {
+    opacity: 1;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .sv-mute {
+        display: none;
+    }
 }
 
 .video-wrapper {
